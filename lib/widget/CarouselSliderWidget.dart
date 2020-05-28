@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/model/Movie.dart';
+import 'package:netflix_clone/screen/DetailScreen.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
   final List<Movie> movies;
@@ -28,7 +29,6 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
     likes = movies.map((m) => m.like).toList();
     _currentPage = 0;
     _currentKeyword = keywords[0];
-
   }
 
   @override
@@ -45,7 +45,6 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                 _currentPage = index;
                 _currentKeyword = keywords[_currentPage];
               });
-
             },
           ),
           Container(
@@ -106,7 +105,14 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(Icons.info),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute<Null>(
+                              fullscreenDialog: true,
+                              builder: (BuildContext context) {
+                                return DetailScreen(
+                                    movie: movies[_currentPage]);
+                              }));
+                        },
                       ),
                       Text(
                         "정보",
