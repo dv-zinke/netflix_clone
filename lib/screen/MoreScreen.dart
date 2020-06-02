@@ -42,6 +42,25 @@ class MoreScreen extends StatelessWidget {
                   text: "https://github.com/dv-zinke",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   linkStyle: TextStyle(color: Colors.white),
+                )),
+            Container(
+                padding: EdgeInsets.all(10),
+                child: FlatButton(
+                  onPressed: () {},
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    color: Colors.red,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.edit, color: Colors.white),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("프로필 수정하기", style: TextStyle(color: Colors.white))
+                      ],
+                    ),
+                  ),
                 ))
           ],
         ),
