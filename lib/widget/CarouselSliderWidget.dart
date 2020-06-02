@@ -24,7 +24,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
   void initState() {
     super.initState();
     movies = widget.movies;
-    images = movies.map((m) => Image.asset('./images/' + m.poster)).toList();
+    images = movies.map((m) => Image.network(m.poster)).toList();
     keywords = movies.map((m) => m.keyword).toList();
     likes = movies.map((m) => m.like).toList();
     _currentPage = 0;
@@ -64,7 +64,9 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                       likes[_currentPage]
                           ? IconButton(
                               icon: Icon(Icons.check),
-                              onPressed: () {},
+                              onPressed: () {
+
+                              },
                             )
                           : IconButton(
                               icon: Icon(Icons.add),
