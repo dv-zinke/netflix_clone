@@ -65,12 +65,22 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                           ? IconButton(
                               icon: Icon(Icons.check),
                               onPressed: () {
-
+                                setState(() {
+                                  likes[_currentPage] = !likes[_currentPage];
+                                  movies[_currentPage].reference.updateData(
+                                      {'like': likes[_currentPage]});
+                                });
                               },
                             )
                           : IconButton(
                               icon: Icon(Icons.add),
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  likes[_currentPage] = !likes[_currentPage];
+                                  movies[_currentPage].reference.updateData(
+                                      {'like': likes[_currentPage]});
+                                });
+                              },
                             ),
                       Text(
                         "내가 찜한 콘텐츠",
