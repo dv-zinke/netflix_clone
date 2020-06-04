@@ -58,14 +58,34 @@ class _SearchScreenState extends State<SearchScreen> {
                               },
                             )
                           : Container(),
-                      hintText:  "검색",
-                      labelStyle:  TextStyle(color:Colors.white),
+                      hintText: "검색",
+                      labelStyle: TextStyle(color: Colors.white),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color:Colors.transparent),
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                      )
+                          borderSide: BorderSide(color: Colors.transparent),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
                     ),
                   ),
+                ),
+                focusNode.hasFocus ? Expanded(
+                  child: FlatButton(
+                    child: Text("취소"),
+                    onPressed: (){
+                      setState(() {
+                        _filter.clear();
+                        _searchText = "";
+                        focusNode.unfocus();
+                      });
+                    },
+                  ),
+                ) : Expanded(
+                  flex: 0,
+                  child: Container(),
                 )
               ],
             ),
