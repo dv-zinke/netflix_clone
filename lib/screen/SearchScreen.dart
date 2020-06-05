@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/model/Movie.dart';
+import 'package:netflix_clone/screen/DetailScreen.dart';
 
 class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
@@ -14,6 +17,48 @@ class _SearchScreenState extends State<SearchScreen> {
     _filter.addListener(() {
       _searchText = _filter.text;
     });
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('movie').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+        return _buildList(context, snapshot.data.documents);
+      },
+    );
+  }
+
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+    List<DocumentSnapshot> searchResults = [];
+
+    for (DocumentSnapshot d in snapshot) {
+      if (d.data.toString().contains(_searchText)) {
+        searchResults.add(d);
+      }
+    }
+
+    return Expanded(
+      child: GridView.count(
+        crossAxisCount: 3,
+        childAspectRatio: 1 / 1.5,
+        padding: EdgeInsets.all(3),
+        children: searchResults.map((d) => _buildListItem(context, d)).toList(),
+      ),
+    );
+  }
+
+  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+    final movie = Movie.fromSnapshot(data);
+    return InkWell(
+      child: Image.network(movie.poster),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute<Null>(
+            fullscreenDialog: true, builder: (BuildContext context) {
+              return DetailScreen(movie: movie);
+        }));
+      },
+    );
   }
 
   @override
@@ -46,17 +91,17 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       suffixIcon: focusNode.hasFocus
                           ? IconButton(
-                              icon: Icon(
-                                Icons.cancel,
-                                size: 20,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _filter.clear();
-                                  _searchText = "";
-                                });
-                              },
-                            )
+                        icon: Icon(
+                          Icons.cancel,
+                          size: 20,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _filter.clear();
+                            _searchText = "";
+                          });
+                        },
+                      )
                           : Container(),
                       hintText: "검색",
                       labelStyle: TextStyle(color: Colors.white),
@@ -72,10 +117,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
                 ),
-                focusNode.hasFocus ? Expanded(
+                focusNode.hasFocus
+                    ? Expanded(
                   child: FlatButton(
                     child: Text("취소"),
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
                         _filter.clear();
                         _searchText = "";
@@ -83,13 +129,15 @@ class _SearchScreenState extends State<SearchScreen> {
                       });
                     },
                   ),
-                ) : Expanded(
+                )
+                    : Expanded(
                   flex: 0,
                   child: Container(),
                 )
               ],
             ),
-          )
+          ),
+          _buildBody(context)
         ],
       ),
     );
