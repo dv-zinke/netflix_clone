@@ -3,6 +3,12 @@
 
 # 시연 화면
 
+<img width="200" src="https://github.com/dv-zinke/netflix_clone/blob/master/github/image/main.png">
+<img width="200" src="https://github.com/dv-zinke/netflix_clone/blob/master/github/image/modal.png">
+<img width="200" src="https://github.com/dv-zinke/netflix_clone/blob/master/github/image/search.png">
+<img width="200" src="https://github.com/dv-zinke/netflix_clone/blob/master/github/image/heart.png">
+<img width="200" src="https://github.com/dv-zinke/netflix_clone/blob/master/github/image/profile.png">
+
 
 
 # 사용 기술
